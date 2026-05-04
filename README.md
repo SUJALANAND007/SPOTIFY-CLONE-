@@ -1,13 +1,3 @@
----
-title: Spotify Web Player Clone
-emoji: 🎵
-colorFrom: green
-colorTo: black
-sdk: static
-app_file: index.html
-pinned: true
----
-
 # Spotify Web Player Clone
 
 A fully functional, responsive music streaming interface built with modern Vanilla JavaScript, HTML5, and CSS3. This project replicates the core user experience of the Spotify desktop application.
