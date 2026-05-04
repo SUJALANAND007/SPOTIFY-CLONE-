@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <title>Spotify Clone</title>
+  <link href="https://fonts.googleapis.com/css2?family=Circular+Std:wght@400;700&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ─── SIDEBAR ─── -->
+<aside class="sidebar">
+  <div class="logo">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"></path>
+    </svg>
+    <span>Spotify</span>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-item active"><i class="fas fa-home"></i> Home</div>
+    <div class="nav-item"><i class="fas fa-search"></i> Search</div>
+    <div class="nav-item"><i class="fas fa-book-open"></i> Your Library</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-item" id="createPlaylistBtn"><i class="fas fa-plus-square"></i> Create Playlist</div>
+    <div class="nav-item"><i class="fas fa-heart" style="color:#6741d9"></i> Liked Songs</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="playlist-list">
+    <h4>Playlists</h4>
+    <div id="playlistSidebar"></div>
+  </div>
+</aside>
+
+<!-- ─── MAIN ─── -->
+<main class="main" id="mainContent">
+  <div class="topbar">
+    <div class="nav-arrows">
+      <button class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+      <button class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="user-area">
+      <div class="user-badge">
+        User
+        <div class="user-avatar">U</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-area">
+    <!-- Featured -->
+    <div class="section-title">Good evening</div>
+    <div class="featured-row" id="featuredRow"></div>
+
+    <!-- Recently played -->
+    <div class="section-title">
+      Recently played
+      <a>Show all</a>
+    </div>
+    <div class="cards-grid" id="recentlyPlayed"></div>
+
+    <!-- Top artists -->
+    <div class="section-title">
+      Your top artists
+      <a>Show all</a>
+    </div>
+    <div class="cards-grid" id="topArtists"></div>
+
+    <!-- New releases -->
+    <div class="section-title">
+      New releases
+      <a>Show all</a>
+    </div>
+    <div class="cards-grid" id="newReleases"></div>
+  </div>
+</main>
+
+<!-- ─── PLAYER BAR ─── -->
+<div class="player-bar">
+
+  <!-- Now Playing -->
+  <div class="now-playing">
+    <div class="np-thumb" id="npThumb">🎵</div>
+    <div class="np-info">
+      <div class="np-title" id="npTitle">No song playing</div>
+      <div class="np-artist" id="npArtist">—</div>
+    </div>
+    <button class="heart-btn" id="heartBtn" onclick="toggleLike()"><i class="far fa-heart"></i></button>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="ctrl-buttons">
+      <button class="ctrl-btn" id="shuffleBtn" onclick="toggleShuffle()" title="Shuffle"><i class="fas fa-random"></i></button>
+      <button class="ctrl-btn" onclick="prevSong()" title="Previous"><i class="fas fa-step-backward"></i></button>
+      <button class="play-pause" id="playPauseBtn" onclick="togglePlay()"><i class="fas fa-play" id="playIcon"></i></button>
+      <button class="ctrl-btn" onclick="nextSong()" title="Next"><i class="fas fa-step-forward"></i></button>
+      <button class="ctrl-btn" id="repeatBtn" onclick="toggleRepeat()" title="Repeat"><i class="fas fa-redo"></i></button>
+    </div>
+    <div class="progress-row">
+      <span class="time" id="currentTime">0:00</span>
+      <div class="progress-bar" id="progressBar" onclick="seekTo(event)">
+        <div class="progress-fill" id="progressFill" style="width:0%">
+          <div class="progress-thumb"></div>
+        </div>
+      </div>
+      <span class="time right" id="totalTime">0:00</span>
+    </div>
+  </div>
+
+  <!-- Volume & extra -->
+  <div class="volume-area">
+    <div class="extra-btns">
+      <button class="vol-btn" title="Queue"><i class="fas fa-list-ul"></i></button>
+      <button class="vol-btn" title="Devices"><i class="fas fa-desktop"></i></button>
+    </div>
+    <button class="vol-btn" id="muteBtn" onclick="toggleMute()"><i class="fas fa-volume-up"></i></button>
+    <div class="vol-slider" id="volSlider" onclick="setVolume(event)">
+      <div class="vol-fill" id="volFill" style="width:70%"></div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+
+</body></html>
